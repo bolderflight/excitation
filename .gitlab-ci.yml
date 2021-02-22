@@ -1,0 +1,14 @@
+stages:
+  - lint
+
+Lint:
+  stage: lint
+  tags:
+    - bfs
+  script: 
+    - cpplint.py --verbose=0 include/excitation/excitation.h
+    - cpplint.py --verbose=0 include/excitation/chirp.h
+    - cpplint.py --verbose=0 include/excitation/doublet.h
+    - cpplint.py --verbose=0 include/excitation/multisine.h
+    - cpplint.py --verbose=0 include/excitation/pulse.h
+    - cpplint.py --verbose=0 include/excitation/sampled.h
