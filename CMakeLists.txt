@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 # Project information
 project(Excitation
-  VERSION 1.0.0
+  VERSION 2.0.0
   DESCRIPTION "Excitation functions."
   LANGUAGES CXX
 )
@@ -9,7 +9,7 @@ include(FetchContent)
 FetchContent_Declare(
 	units
 	GIT_REPOSITORY https://github.com/bolderflight/units.git
-	GIT_TAG v2.0.0
+	GIT_TAG v3.1.0
 )
 FetchContent_MakeAvailable(units)
 FetchContent_Declare(
@@ -42,31 +42,4 @@ if (PROJECT_NAME STREQUAL CMAKE_PROJECT_NAME)
 		PRIVATE 
 			excitation
 	)
-	# # Fetch google test
-	# include(FetchContent)
-	# FetchContent_Declare(
-	# 	googletest
-	# 	GIT_REPOSITORY https://github.com/google/googletest.git
-	# 	GIT_TAG 				release-1.10.0
-	# )
-	# FetchContent_MakeAvailable(googletest)
-	# enable_testing()
-	# include(GoogleTest)
-	# # Add the test target
-	# add_executable(airdata_test tests/airdata_test.cc)
-	# # Add the includes
-	# target_include_directories(airdata_test PUBLIC 
-	# 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-	# 	$<INSTALL_INTERFACE:include>
-	# )
-	# # Link libraries to the test target
-	# target_link_libraries(airdata_test
-	# 	PRIVATE 
-	# 		airdata
-	# 		gtest_main 
-	# 		gtest
-	# 		gmock
-	# )
-	# # Discover unit tests
-	# gtest_discover_tests(airdata_test)
 endif()
