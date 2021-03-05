@@ -6,9 +6,9 @@ Lint:
   tags:
     - bfs
   script: 
-    - cpplint.py --verbose=0 include/excitation/excitation.h
-    - cpplint.py --verbose=0 include/excitation/chirp.h
-    - cpplint.py --verbose=0 include/excitation/doublet.h
-    - cpplint.py --verbose=0 include/excitation/multisine.h
-    - cpplint.py --verbose=0 include/excitation/pulse.h
-    - cpplint.py --verbose=0 include/excitation/sampled.h
+    - cpplint --verbose=0 include/excitation/excitation.h
+    - cpplint --verbose=0 include/excitation/chirp.h
+    - cpplint --verbose=0 include/excitation/doublet.h
+    - cpplint --verbose=0 include/excitation/multisine.h
+    - cpplint --verbose=0 include/excitation/pulse.h
+    - cpplint --verbose=0 include/excitation/sampled.h

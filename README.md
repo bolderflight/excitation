@@ -21,7 +21,7 @@ make
 This will build the library, an example executable called *excitation_example*. The example executable source file is located at *examples/excitation_example.cc*.
 
 ## Namespace
-This library is within the namespace *excitation*.
+This library is within the namespace *bfs*.
 
 ### Pulse
 This class implements a pulse.
@@ -30,7 +30,7 @@ This class implements a pulse.
 
 ```C++
 /* Creates a 10 second pulse, amplitude of 2 */
-excitation::Pulse pulse(10.0f, 2.0f);
+bfs::Pulse pulse(10.0f, 2.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -47,7 +47,7 @@ This class implements a 1-cos pulse.
 
 ```C++
 /* Creates a 10 second 1-cos pulse, a 2 second pause, amplitude of 2 */
-excitation::Pulse1Cos pulse(10.0f, 2.0f, 2.0f);
+bfs::Pulse1Cos pulse(10.0f, 2.0f, 2.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -64,7 +64,7 @@ This class implements a doublet.
 
 ```C++
 /* Creates a 5 second doublet, amplitude of 2 */
-excitation::Doublet doublet(5.0f, 2.0f);
+bfs::Doublet doublet(5.0f, 2.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -81,7 +81,7 @@ This class implements a 1-2-1 doublet.
 
 ```C++
 /* Creates a 5 second doublet, amplitude of 2 */
-excitation::Doublet121 doublet(5.0f, 2.0f);
+bfs::Doublet121 doublet(5.0f, 2.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -98,7 +98,7 @@ This class implements a 3-2-1-1 doublet.
 
 ```C++
 /* Creates a 5 second doublet, amplitude of 2 */
-excitation::Doublet3211 doublet(5.0f, 2.0f);
+bfs::Doublet3211 doublet(5.0f, 2.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -115,7 +115,7 @@ This class implements a linear chirp.
 
 ```C++
 /* Creates a 5 second chirp, amplitude from 2 to 0.5 and frequency from 1 rad/s to 6 rad/s */
-excitation::LinearChirp chirp(5.0f, 2.0f, 0.5f, 1.0f, 6.0f);
+bfs::LinearChirp chirp(5.0f, 2.0f, 0.5f, 1.0f, 6.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -132,7 +132,7 @@ This class implements a log chirp.
 
 ```C++
 /* Creates a 5 second chirp, amplitude from 2 to 0.5 and frequency from 1 rad/s to 6 rad/s */
-excitation::LogChirp chirp(5.0f, 2.0f, 0.5f, 1.0f, 6.0f);
+bfs::LogChirp chirp(5.0f, 2.0f, 0.5f, 1.0f, 6.0f);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -155,7 +155,7 @@ This class implements a multisine.
   Eigen::Matrix<float, 5, 1> amplitude; 
   amplitude << 0.19810717087274396, 0.19810717087274396, 0.19810717087274396, 0.19810717087274396, 0.19810717087274396;
   /* 10 second multisine with the given amplitude, frequency, and phase vectors */
-  excitation::MultiSine<5> multisine(10.0f, amplitude, frequency, phase);
+  bfs::MultiSine<5> multisine(10.0f, amplitude, frequency, phase);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
@@ -173,7 +173,7 @@ This class implements a user-defined excitation.
 ```C++
 /* 10 second duration excitation defined by the array samp, which is spaced at 1 second intervals */
 std::array<float, 10> samp = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-excitation::Sampled<10> sampled(10, 1, samp);
+bfs::Sampled<10> sampled(10, 1, samp);
 ```
 
 **float Run(float time_s)** Computes the excitation output given the time since the start of the excitation.
