@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 # Project information
 project(Excitation
-  VERSION 2.0.0
+  VERSION 2.0.1
   DESCRIPTION "Excitation functions."
   LANGUAGES CXX
 )
@@ -9,13 +9,13 @@ include(FetchContent)
 FetchContent_Declare(
 	units
 	GIT_REPOSITORY https://github.com/bolderflight/units.git
-	GIT_TAG v3.1.0
+	GIT_TAG v3.2.0
 )
 FetchContent_MakeAvailable(units)
 FetchContent_Declare(
 	eigen
 	GIT_REPOSITORY https://github.com/bolderflight/eigen.git
-	GIT_TAG v1.0.0
+	GIT_TAG v2.0.0
 )
 FetchContent_MakeAvailable(eigen)
 # Add the library target
