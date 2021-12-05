@@ -1,14 +1,29 @@
-# excitation
-This library contains airdata functions.
+[![Pipeline](https://gitlab.com/bolderflight/software/excitation/badges/main/pipeline.svg)](https://gitlab.com/bolderflight/software/excitation/) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+![Bolder Flight Systems Logo](img/logo-words_75.png) &nbsp; &nbsp; ![Arduino Logo](img/arduino_logo_75.png)
+
+# Excitation
+This library contains functions to create excitation waveforms for exciting a system and measuring its response. his library is compatible with Arduino ARM and with CMake build systems. It would also be easy to add to other projects, since it is a header only library.
    * [License](LICENSE.md)
    * [Changelog](CHANGELOG.md)
    * [Contributing guide](CONTRIBUTING.md)
 
-## Installation
+# Installation
+
+## Arduino
+Use the Arduino Library Manager to install this library or clone to your Arduino/libraries folder. In addition, this library requires the [Bolder Flight Systems Units library](https://github.com/bolderflight/units) and [Bolder Flight Systems Eigen library](https://github.com/bolderflight/eigen) to be installed. This library is added as:
+
+```C++
+#include "excitation.h"
+```
+
+An example Arduino executable is located at *examples/arduino/excitation_example/excitation_example.ino*. Teensy 3.x, 4.x, and LC devices are used for testing under Arduino and this library should be compatible with other ARM devices. This library is *not* expected to work on AVR devices.
+
+## CMake
 CMake is used to build this library, which is exported as a library target called *excitation*. The header is added as:
 
-```
-#include "excitation/excitation.h"
+```C++
+#include "excitation.h"
 ```
 
 The library can be also be compiled stand-alone using the CMake idiom of creating a *build* directory and then, from within that directory issuing:
@@ -18,12 +33,12 @@ cmake ..
 make
 ```
 
-This will build the library, an example executable called *excitation_example*. The example executable source file is located at *examples/excitation_example.cc*.
+This will build the library, an example executable called *excitation_example*. The example executable source file is located at *examples/cmake/excitation_example.cc*.
 
-## Namespace
+# Namespace
 This library is within the namespace *bfs*.
 
-### Pulse
+# Pulse
 This class implements a pulse.
 
 **Pulse(float dur_s, float amp)** Creates a pulse, specifying the pulse duration (seconds) and amplitude.
@@ -40,7 +55,7 @@ bfs::Pulse pulse(10.0f, 2.0f);
 float y = pulse.Run(3.0f);
 ```
 
-### Pulse1Cos
+# Pulse1Cos
 This class implements a 1-cos pulse.
 
 **Pulse1Cos(float dur_s, float amp)** Creates a pulse, specifying the duration of the 1-cos (seconds), pause time at peak amplitude (seconds), and amplitude. The total duration of the pulse is the 1-cos duration plus the pause time.
@@ -57,7 +72,7 @@ bfs::Pulse1Cos pulse(10.0f, 2.0f, 2.0f);
 float y = pulse.Run(3.0f);
 ```
 
-### Doublet
+# Doublet
 This class implements a doublet.
 
 **Doublet(float dur_s, float amp)** Creates a doublet give the duration of one of the steps (seconds) and amplitude. The total duration of the excitation is 2 times the step duration.
@@ -74,7 +89,7 @@ bfs::Doublet doublet(5.0f, 2.0f);
 float y = doublet.Run(3.0f);
 ```
 
-### Doublet121
+# Doublet121
 This class implements a 1-2-1 doublet.
 
 **Doublet121(float dur_s, float amp)** Creates a 1-2-1 doublet give the duration of one of the steps (seconds) and amplitude. The total duration of the excitation is 4 times the step duration.
@@ -91,7 +106,7 @@ bfs::Doublet121 doublet(5.0f, 2.0f);
 float y = doublet.Run(3.0f);
 ```
 
-### Doublet3211
+# Doublet3211
 This class implements a 3-2-1-1 doublet.
 
 **Doublet3211(float dur_s, float amp)** Creates a 3-2-1-1 doublet give the duration of one of the steps (seconds) and amplitude. The total duration of the excitation is 7 times the step duration.
@@ -108,7 +123,7 @@ bfs::Doublet3211 doublet(5.0f, 2.0f);
 float y = doublet.Run(3.0f);
 ```
 
-### LinearChirp
+# LinearChirp
 This class implements a linear chirp.
 
 **LinearChirp(float dur_s, float amp_start, float amp_stop, float freq_start, float freq_stop)** Creates a linear chirp given the chirp duration (seconds), starting and stopping amplitude, and starting and stoping frequency (rad/s).
@@ -125,7 +140,7 @@ bfs::LinearChirp chirp(5.0f, 2.0f, 0.5f, 1.0f, 6.0f);
 float y = chirp.Run(3.0f);
 ```
 
-### LogChirp
+# LogChirp
 This class implements a log chirp.
 
 **LogChirp(float dur_s, float amp_start, float amp_stop, float freq_start, float freq_stop)** Creates a log chirp given the chirp duration (seconds), starting and stopping amplitude, and starting and stoping frequency (rad/s).
@@ -142,7 +157,7 @@ bfs::LogChirp chirp(5.0f, 2.0f, 0.5f, 1.0f, 6.0f);
 float y = chirp.Run(3.0f);
 ```
 
-### MultiSine
+# MultiSine
 This class implements a multisine.
 
 **MultiSine(float dur_s, const Eigen::Matrix<float, N, 1> &amp, const Eigen::Matrix<float, N, 1> &freq, const Eigen::Matrix<float, N, 1> &phase)** Creates a multisine excitation given the duration and vectors of the amplitude, frequency (rad/s), and phase (rad). Note that these vectors must be the same length and the length is specified via a template parameter on the class.
@@ -165,7 +180,7 @@ This class implements a multisine.
 float y = multisine.Run(3.0f);
 ```
 
-### Sampled
+# Sampled
 This class implements a user-defined excitation.
 
 **Sampled(float dur_s, float dt_s, const std::array<float, N> &samp)** Creates a user-defined excitation specifying the excitation duration (seconds), sample rate of the provided data (seconds), and an array of output values. Note that this class simply computes the appropriate index in the array of output values, based on the input time and sample rate, and outputs that value. No interpolation or extrapolation is used.

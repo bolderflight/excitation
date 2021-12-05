@@ -23,8 +23,13 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef INCLUDE_EXCITATION_DOUBLET_H_
-#define INCLUDE_EXCITATION_DOUBLET_H_
+#ifndef SRC_DOUBLET_H_
+#define SRC_DOUBLET_H_
+
+#if defined(ARDUINO)
+#include <Arduino.h>
+#endif
+#include <cstddef>
 
 namespace bfs {
 
@@ -87,4 +92,4 @@ class Doublet3211 {
 
 }  // namespace bfs
 
-#endif  // INCLUDE_EXCITATION_DOUBLET_H_
+#endif  // SRC_DOUBLET_H_

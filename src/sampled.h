@@ -23,11 +23,15 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef INCLUDE_EXCITATION_SAMPLED_H_
-#define INCLUDE_EXCITATION_SAMPLED_H_
+#ifndef SRC_SAMPLED_H_
+#define SRC_SAMPLED_H_
 
+#if defined(ARDUINO)
+#include <Arduino.h>
+#endif
+#include <cstddef>
 #include <array>
-#include "Eigen/Core"
+#include "eigen.h"  // NOLINT
 #include "Eigen/Dense"
 
 namespace bfs {
@@ -52,4 +56,4 @@ class Sampled {
 
 }  // namespace bfs
 
-#endif  // INCLUDE_EXCITATION_SAMPLED_H_
+#endif  // SRC_SAMPLED_H_

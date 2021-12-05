@@ -6,7 +6,7 @@
 */
 
 #include <iostream>
-#include "excitation/excitation.h"
+#include "excitation.h"
 
 int main() {
   /* Pulse */

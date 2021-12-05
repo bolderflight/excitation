@@ -23,9 +23,13 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef INCLUDE_EXCITATION_CHIRP_H_
-#define INCLUDE_EXCITATION_CHIRP_H_
+#ifndef SRC_CHIRP_H_
+#define SRC_CHIRP_H_
 
+#if defined(ARDUINO)
+#include <Arduino.h>
+#endif
+#include <cstddef>
 #include <cmath>
 
 namespace bfs {
@@ -88,4 +92,4 @@ class LogChirp {
 
 }  // namespace bfs
 
-#endif  // INCLUDE_EXCITATION_CHIRP_H_
+#endif  // SRC_CHIRP_H_
