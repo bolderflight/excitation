@@ -6,9 +6,9 @@ Lint:
   tags:
     - bfs
   script: 
-    - cpplint --verbose=0 include/excitation/excitation.h
-    - cpplint --verbose=0 include/excitation/chirp.h
-    - cpplint --verbose=0 include/excitation/doublet.h
-    - cpplint --verbose=0 include/excitation/multisine.h
-    - cpplint --verbose=0 include/excitation/pulse.h
-    - cpplint --verbose=0 include/excitation/sampled.h
+    - cpplint --verbose=0 src/excitation.h
+    - cpplint --verbose=0 src/chirp.h
+    - cpplint --verbose=0 src/doublet.h
+    - cpplint --verbose=0 src/multisine.h
+    - cpplint --verbose=0 src/pulse.h
+    - cpplint --verbose=0 src/sampled.h

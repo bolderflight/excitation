@@ -24,13 +24,13 @@
 */
 
 
-#ifndef INCLUDE_EXCITATION_EXCITATION_H_
-#define INCLUDE_EXCITATION_EXCITATION_H_
+#ifndef SRC_EXCITATION_H_
+#define SRC_EXCITATION_H_
 
-#include "excitation/pulse.h"
-#include "excitation/doublet.h"
-#include "excitation/chirp.h"
-#include "excitation/multisine.h"
-#include "excitation/sampled.h"
+#include "pulse.h"  // NOLINT
+#include "doublet.h"  // NOLINT
+#include "chirp.h"  // NOLINT
+#include "multisine.h"  // NOLINT
+#include "sampled.h"  // NOLINT
 
-#endif  // INCLUDE_EXCITATION_EXCITATION_H_
+#endif  // SRC_EXCITATION_H_

@@ -23,38 +23,57 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef INCLUDE_EXCITATION_MULTISINE_H_
-#define INCLUDE_EXCITATION_MULTISINE_H_
+#ifndef SRC_PULSE_H_
+#define SRC_PULSE_H_
 
-#include <array>
-#include "Eigen/Core"
-#include "Eigen/Dense"
+#if defined(ARDUINO)
+#include <Arduino.h>
+#endif
+#include <cstddef>
+#include <cmath>
+#include "units.h"  // NOLINT
 
 namespace bfs {
 
-template<std::size_t N>
-class MultiSine {
+class Pulse {
  public:
-  MultiSine(float dur_s,
-            const Eigen::Matrix<float, N, 1> &amp,
-            const Eigen::Matrix<float, N, 1> &freq,
-            const Eigen::Matrix<float, N, 1> &phase) :
-            amp_(amp), freq_(freq), phase_(phase) {}
-  inline float Run(const float time_s) {
+  Pulse(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
+  inline float Run(const float time_s) const {
     if (time_s < dur_s_) {
-      return (amp_ * (freq_ * time_s + phase_).sinf()).sumf();
+      return amp_;
     } else {
       return 0.0f;
     }
   }
 
  private:
-  float dur_s_;
-  Eigen::Matrix<float, N, 1> amp_;
-  Eigen::Matrix<float, N, 1> freq_;
-  Eigen::Matrix<float, N, 1> phase_;
+  const float dur_s_, amp_;
+};
+
+class Pulse1Cos {
+ public:
+  Pulse1Cos(const float dur_s, const float pause_s, const float amp) :
+            dur_s_(dur_s), pause_s_(pause_s), amp_(amp),
+            freq_slope_(2.0f * BFS_PI<float> / dur_s_) {}
+  inline float Run(const float time_s) const {
+    if (time_s < dur_s_ + pause_s_) {
+      if (time_s < 0.5f * dur_s_) {
+        return amp_ * 0.5f * (1.0f - cosf(freq_slope_ * time_s));
+      } else if (time_s < 0.5f * dur_s_ + pause_s_) {
+        return amp_;
+      } else {
+        return amp_ * 0.5f * (1.0f - cosf(freq_slope_ * (time_s - pause_s_)));
+      }
+    } else {
+      return 0.0f;
+    }
+  }
+
+ private:
+  const float dur_s_, pause_s_, amp_;
+  const float freq_slope_;
 };
 
 }  // namespace bfs
 
-#endif  // INCLUDE_EXCITATION_MULTISINE_H_
+#endif  // SRC_PULSE_H_
