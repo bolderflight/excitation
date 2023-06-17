@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2023 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -24,8 +24,8 @@
 */
 
 
-#ifndef SRC_EXCITATION_H_
-#define SRC_EXCITATION_H_
+#ifndef EXCITATION_SRC_EXCITATION_H_  // NOLINT
+#define EXCITATION_SRC_EXCITATION_H_
 
 #include "pulse.h"  // NOLINT
 #include "doublet.h"  // NOLINT
@@ -33,4 +33,4 @@
 #include "multisine.h"  // NOLINT
 #include "sampled.h"  // NOLINT
 
-#endif  // SRC_EXCITATION_H_
+#endif  // EXCITATION_SRC_EXCITATION_H_ NOLINT

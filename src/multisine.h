@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2023 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -23,42 +23,29 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef SRC_MULTISINE_H_
-#define SRC_MULTISINE_H_
+#ifndef EXCITATION_SRC_MULTISINE_H_  // NOLINT
+#define EXCITATION_SRC_MULTISINE_H_
 
 #if defined(ARDUINO)
 #include <Arduino.h>
-#endif
+#else
 #include <cstddef>
-#include <array>
-#include "eigen.h"  // NOLINT
-#include "Eigen/Dense"
+#include <cmath>
+#endif
 
 namespace bfs {
 
-template<std::size_t N>
 class MultiSine {
  public:
-  MultiSine(float dur_s,
-            const Eigen::Matrix<float, N, 1> &amp,
-            const Eigen::Matrix<float, N, 1> &freq,
-            const Eigen::Matrix<float, N, 1> &phase) :
-            amp_(amp), freq_(freq), phase_(phase) {}
-  inline float Run(const float time_s) {
-    if (time_s < dur_s_) {
-      return (amp_ * (freq_ * time_s + phase_).sinf()).sumf();
-    } else {
-      return 0.0f;
-    }
-  }
+  MultiSine(const float dur_s) : dur_s_(dur_s) {}
+  float Run(const float time_s, float * const amp, float * const freq,
+            float * const phase, const size_t len);
 
  private:
-  float dur_s_;
-  Eigen::Matrix<float, N, 1> amp_;
-  Eigen::Matrix<float, N, 1> freq_;
-  Eigen::Matrix<float, N, 1> phase_;
+  const float dur_s_;
+  float sum_;
 };
 
 }  // namespace bfs
 
-#endif  // SRC_MULTISINE_H_
+#endif  // EXCITATION_SRC_MULTISINE_H_ NOLINT

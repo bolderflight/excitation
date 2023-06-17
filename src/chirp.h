@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2023 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -23,73 +23,57 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef SRC_CHIRP_H_
-#define SRC_CHIRP_H_
+#ifndef EXCITATION_SRC_CHIRP_H_  // NOLINT
+#define EXCITATION_SRC_CHIRP_H_
 
 #if defined(ARDUINO)
 #include <Arduino.h>
-#endif
+#else
 #include <cstddef>
 #include <cmath>
+#endif
 
 namespace bfs {
 
 class LinearChirp {
  public:
-  LinearChirp(float dur_s, float amp_start, float amp_stop, float freq_start,
-              float freq_stop) : dur_s_(dur_s), amp_start_(amp_start),
+  LinearChirp(const float dur_s, const float amp_start, const float amp_stop,
+              const float freq_start, const float freq_stop)
+              : dur_s_(dur_s), amp_start_(amp_start),
               amp_stop_(amp_stop), freq_start_(freq_start),
-              freq_stop_(freq_stop) {
-    freq_slope_ = (freq_stop_ - freq_start_) / dur_s_;
-    amp_slope_ = (amp_stop_ - amp_start_) / dur_s_;
-  }
-  inline float Run(const float time_s) {
-    if (time_s < dur_s_) {
-      freq_ = freq_start_ + freq_slope_ * time_s;
-      amp_ = amp_start_ + amp_slope_ * time_s;
-      return amp_ * sinf((freq_ / 2.0f) * time_s);
-    } else {
-      return 0.0f;
-    }
-  }
+              freq_stop_(freq_stop),
+              freq_slope_((freq_stop_ - freq_start_) / dur_s_),
+              amp_slope_((amp_stop_ - amp_start_) / dur_s_) {}
+  float Run(const float time_s);
 
  private:
-  float dur_s_;
-  float amp_start_, amp_stop_;
-  float freq_start_, freq_stop_;
-  float freq_slope_, amp_slope_;
+  const float dur_s_;
+  const float amp_start_, amp_stop_;
+  const float freq_start_, freq_stop_;
+  const float freq_slope_, amp_slope_;
   float freq_, amp_;
 };
 
 class LogChirp {
  public:
-  LogChirp(float dur_s, float amp_start, float amp_stop, float freq_start,
-           float freq_stop) : dur_s_(dur_s), amp_start_(amp_start),
-           amp_stop_(amp_stop), freq_start_(freq_start),
-           freq_stop_(freq_stop) {
-    freq_slope_ = powf(freq_stop_ / freq_start_, 1.0f / dur_s_);
-    freq_log_ = logf(freq_slope_);
-    amp_slope_ = (amp_stop_ - amp_start_) / dur_s_;
-  }
-  inline float Run(const float time_s) {
-    if (time_s < dur_s_) {
-      freq_ = freq_start_ * (powf(freq_slope_, time_s) - 1.0f) /
-              (time_s * freq_log_);
-      amp_ = amp_start_ + amp_slope_ * time_s;
-      return amp_ * sinf(freq_ * time_s);
-    } else {
-      return 0.0f;
-    }
-  }
+  LogChirp(const float dur_s, const float amp_start, const float amp_stop,
+           const float freq_start, const float freq_stop)
+           : dur_s_(dur_s), amp_start_(amp_start), amp_stop_(amp_stop),
+           freq_start_(freq_start), freq_stop_(freq_stop),
+           freq_slope_(powf(freq_stop_ / freq_start_, 1.0f / dur_s_)),
+           freq_log_(logf(freq_slope_)),
+           amp_slope_((amp_stop_ - amp_start_) / dur_s_) {}
+
+  float Run(const float time_s);
 
  private:
-  float dur_s_;
-  float amp_start_, amp_stop_;
-  float freq_start_, freq_stop_;
-  float freq_slope_, freq_log_, amp_slope_;
+  const float dur_s_;
+  const float amp_start_, amp_stop_;
+  const float freq_start_, freq_stop_;
+  const float freq_slope_, freq_log_, amp_slope_;
   float freq_, amp_;
 };
 
 }  // namespace bfs
 
-#endif  // SRC_CHIRP_H_
+#endif  // EXCITATION_SRC_CHIRP_H_ NOLINT

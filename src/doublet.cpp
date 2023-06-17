@@ -23,42 +23,48 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef EXCITATION_SRC_DOUBLET_H_  // NOLINT
-#define EXCITATION_SRC_DOUBLET_H_
-
 #if defined(ARDUINO)
 #include <Arduino.h>
 #endif
 
+#include "doublet.h"  // NOLINT
+
 namespace bfs {
 
-class Doublet {
- public:
-  Doublet(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
+float Doublet::Run(const float time_s) const {
+  if (time_s < dur_s_) {
+    return amp_;
+  } else if (time_s < 2.0f * dur_s_) {
+    return -amp_;
+  } else {
+    return 0.0f;
+  }
+}
 
- private:
-  const float dur_s_, amp_;
-};
+float Doublet121::Run(const float time_s) const {
+  if (time_s < dur_s_) {
+    return amp_;
+  } else if (time_s < 3.0f * dur_s_) {
+    return -amp_;
+  } else if (time_s < 4.0f * dur_s_) {
+    return amp_;
+  } else {
+    return 0.0f;
+  }
+}
 
-class Doublet121 {
- public:
-  Doublet121(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet3211 {
- public:
-  Doublet3211(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
+float Doublet3211::Run(const float time_s) const {
+  if (time_s < 3.0f * dur_s_) {
+    return amp_;
+  } else if (time_s < 5.0f * dur_s_) {
+    return -amp_;
+  } else if (time_s < 6.0f * dur_s_) {
+    return amp_;
+  } else if (time_s < 7.0f * dur_s_) {
+    return -amp_;
+  } else {
+    return 0.0f;
+  }
+}
 
 }  // namespace bfs
-
-#endif  // EXCITATION_SRC_DOUBLET_H_ NOLINT

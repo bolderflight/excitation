@@ -23,42 +23,28 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef EXCITATION_SRC_DOUBLET_H_  // NOLINT
-#define EXCITATION_SRC_DOUBLET_H_
-
 #if defined(ARDUINO)
 #include <Arduino.h>
+#else
+#include <cstddef>
+#include <cmath>
 #endif
+
+#include "multisine.h"
 
 namespace bfs {
 
-class Doublet {
- public:
-  Doublet(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet121 {
- public:
-  Doublet121(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet3211 {
- public:
-  Doublet3211(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
+float MultiSine::Run(const float time_s, float * const amp, float * const freq,
+                     float * const phase, const size_t len) {
+  if (time_s < dur_s_) {
+    sum_ = 0;
+    for (size_t i = 0; i < len; i++) {
+      sum_ += amp[i] * sinf(freq[i] * time_s + phase[i]);
+    }
+    return sum_;
+  } else {
+    return 0.0f;
+  }
+}
 
 }  // namespace bfs
-
-#endif  // EXCITATION_SRC_DOUBLET_H_ NOLINT

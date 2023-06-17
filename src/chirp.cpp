@@ -23,42 +23,36 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef EXCITATION_SRC_DOUBLET_H_  // NOLINT
-#define EXCITATION_SRC_DOUBLET_H_
-
 #if defined(ARDUINO)
 #include <Arduino.h>
+#else
+#include <cstddef>
+#include <cmath>
 #endif
+
+#include "chirp.h"  // NOLINT
 
 namespace bfs {
 
-class Doublet {
- public:
-  Doublet(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
+float LinearChirp::Run(const float time_s) {
+  if (time_s < dur_s_) {
+    freq_ = freq_start_ + freq_slope_ * time_s;
+    amp_ = amp_start_ + amp_slope_ * time_s;
+    return amp_ * sinf((freq_ / 2.0f) * time_s);
+  } else {
+    return 0.0f;
+  }
+}
 
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet121 {
- public:
-  Doublet121(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet3211 {
- public:
-  Doublet3211(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
+float LogChirp::Run(const float time_s) {
+  if (time_s < dur_s_) {
+    freq_ = freq_start_ * (powf(freq_slope_, time_s) - 1.0f) /
+            (time_s * freq_log_);
+    amp_ = amp_start_ + amp_slope_ * time_s;
+    return amp_ * sinf(freq_ * time_s);
+  } else {
+    return 0.0f;
+  }
+}
 
 }  // namespace bfs
-
-#endif  // EXCITATION_SRC_DOUBLET_H_ NOLINT

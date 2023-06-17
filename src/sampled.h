@@ -2,7 +2,7 @@
 * Brian R Taylor
 * brian.taylor@bolderflight.com
 * 
-* Copyright (c) 2021 Bolder Flight Systems Inc
+* Copyright (c) 2023 Bolder Flight Systems Inc
 *
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the “Software”), to
@@ -23,37 +23,28 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef SRC_SAMPLED_H_
-#define SRC_SAMPLED_H_
+#ifndef EXCITATION_SRC_SAMPLED_H_  // NOLINT
+#define EXCITATION_SRC_SAMPLED_H_
 
 #if defined(ARDUINO)
 #include <Arduino.h>
-#endif
+#else
 #include <cstddef>
-#include <array>
-#include "eigen.h"  // NOLINT
-#include "Eigen/Dense"
+#endif
 
 namespace bfs {
 
-template<std::size_t N>
 class Sampled {
  public:
-  Sampled(float dur_s, float dt_s, const std::array<float, N> &samp) :
-          dur_s_(dur_s), dt_s_(dt_s), samp_(samp) {}
-  inline float Run(const float time_s) {
-    if (time_s < dur_s_) {
-      return samp_[static_cast<std::size_t>(time_s / dt_s_)];
-    } else {
-      return 0.0f;
-    }
-  }
+  Sampled(const float dur_s, const float dt_s) :
+          dur_s_(dur_s), dt_s_(dt_s) {}
+  float Run(const float time_s, float * const data, const size_t len);
 
  private:
-  float dur_s_, dt_s_;
-  std::array<float, N> samp_;
+  const float dur_s_, dt_s_;
+  size_t idx_;
 };
 
 }  // namespace bfs
 
-#endif  // SRC_SAMPLED_H_
+#endif  // EXCITATION_SRC_SAMPLED_H_ NOLINT

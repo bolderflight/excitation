@@ -23,42 +23,25 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef EXCITATION_SRC_DOUBLET_H_  // NOLINT
-#define EXCITATION_SRC_DOUBLET_H_
-
 #if defined(ARDUINO)
 #include <Arduino.h>
+#else
+#include <cstddef>
 #endif
+
+#include "sampled.h"  // NOLINT
 
 namespace bfs {
 
-class Doublet {
- public:
-  Doublet(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet121 {
- public:
-  Doublet121(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet3211 {
- public:
-  Doublet3211(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
+float Sampled::Run(const float time_s, float * const data, const size_t len) {
+  if (!data) {return 0.0f;}
+  if (time_s < dur_s_) {
+    idx_ = static_cast<size_t>(time_s / dt_s_);
+    if (idx_ > (len - 1)) {return 0.0f;}
+    return data[idx_];
+  } else {
+    return 0.0f;
+  }
+}
 
 }  // namespace bfs
-
-#endif  // EXCITATION_SRC_DOUBLET_H_ NOLINT

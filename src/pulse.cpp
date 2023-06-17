@@ -23,42 +23,36 @@
 * IN THE SOFTWARE.
 */
 
-#ifndef EXCITATION_SRC_DOUBLET_H_  // NOLINT
-#define EXCITATION_SRC_DOUBLET_H_
-
 #if defined(ARDUINO)
 #include <Arduino.h>
+#else
+#include <cmath>
 #endif
+
+#include "pulse.h"  // NOLINT
 
 namespace bfs {
 
-class Doublet {
- public:
-  Doublet(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
+float Pulse::Run(const float time_s) const {
+  if (time_s < dur_s_) {
+    return amp_;
+  } else {
+    return 0.0f;
+  }
+}
 
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet121 {
- public:
-  Doublet121(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
-
-class Doublet3211 {
- public:
-  Doublet3211(const float dur_s, const float amp) : dur_s_(dur_s), amp_(amp) {}
-  float Run(const float time_s) const;
-
- private:
-  const float dur_s_, amp_;
-};
+float Pulse1Cos::Run(const float time_s) const {
+  if (time_s < dur_s_ + pause_s_) {
+    if (time_s < 0.5f * dur_s_) {
+      return amp_ * 0.5f * (1.0f - cosf(freq_slope_ * time_s));
+    } else if (time_s < 0.5f * dur_s_ + pause_s_) {
+      return amp_;
+    } else {
+      return amp_ * 0.5f * (1.0f - cosf(freq_slope_ * (time_s - pause_s_)));
+    }
+  } else {
+    return 0.0f;
+  }
+}
 
 }  // namespace bfs
-
-#endif  // EXCITATION_SRC_DOUBLET_H_ NOLINT
