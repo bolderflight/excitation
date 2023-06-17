@@ -30,7 +30,7 @@
 #include <cmath>
 #endif
 
-#include "multisine.h"
+#include "multisine.h"  // NOLINT
 
 namespace bfs {
 
