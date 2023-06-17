@@ -37,7 +37,7 @@ namespace bfs {
 
 class MultiSine {
  public:
-  MultiSine(const float dur_s) : dur_s_(dur_s) {}
+  explicit MultiSine(const float dur_s) : dur_s_(dur_s) {}
   float Run(const float time_s, float * const amp, float * const freq,
             float * const phase, const size_t len);
 
